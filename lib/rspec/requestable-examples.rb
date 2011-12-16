@@ -31,15 +31,11 @@ module RSpec
     end
   
     def requestable_describe(description, options={}, &blk)
-      requestable_describes << description
-      describe description, &blk if requested_examples.include?(options[:as] || description)
+      label = options[:as] || description
+      requestable_examples << label
+      describe description, &blk if requested_examples.run?(label)
     end
     alias_method :requestable_context, :requestable_describe
-
-    def requestable_describes
-      @requestable_describes ||= []
-    end
-    alias_method :requestable_contexts, :requestable_describes
   end
 
 end
