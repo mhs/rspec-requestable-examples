@@ -3,7 +3,6 @@ module RSpec
     class RequestedExamples < Array
       def initialize(options)
         options ||= {}
-        puts self.object_id
         replace options[:examples] || []
       end
   
@@ -14,7 +13,6 @@ module RSpec
     end
     
     def request_examples(options)
-      puts options.inspect
       @requested_examples = RequestedExamples.new(options)
     end
   
