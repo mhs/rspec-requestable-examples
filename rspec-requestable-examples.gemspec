@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'rspec-requestable-examples'
-  s.version     = '0.1.0'
+  s.version     = '0.1.1'
   s.summary     = "rspec-requestable-examples let's you include specific examples from shared example sets"
   s.description = "See home page"
   s.authors     = ["Zach Dennis"]
