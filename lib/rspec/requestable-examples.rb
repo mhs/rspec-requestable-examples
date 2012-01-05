@@ -43,8 +43,10 @@ module RSpec
     
     def verify_requested_examples!
       missing_examples = requested_examples - examples_that_can_be_requested
-      if missing_examples.any?
-        raise %|Trying to request examples that don't exist:\n#{missing_examples.join("\n")}|
+      missing_examples.each do |description|
+        it description do
+          pending("This example was requested but isn't defined, typo?")
+        end
       end
     end
   end
