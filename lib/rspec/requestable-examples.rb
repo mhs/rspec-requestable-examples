@@ -37,7 +37,7 @@ module RSpec
   
     def requestable_describe(description, options={}, &blk)
       label = options[:as] || description
-      requestable_examples << label
+      examples_that_can_be_requested << label
       describe description, &blk if requested_examples.run?(label)
     end
     alias_method :requestable_context, :requestable_describe
