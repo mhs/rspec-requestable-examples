@@ -25,8 +25,9 @@ module RSpec
     end
   
     def requestable_example(description, options={}, &blk)
-      examples_that_can_be_requested << description
-      it description, &blk if requested_examples.run?(options[:as] || description)
+      label = options[:as] || description
+      examples_that_can_be_requested << label
+      it description, &blk if requested_examples.run?(label)
     end
     alias_method :requestable_it, :requestable_example
   
