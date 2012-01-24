@@ -13,26 +13,22 @@ Feature: shared examples
         end
       """
 
-  Scenario: Including examples
+  Scenario: Including specific examples
     Given a file named "collection_spec.rb" with:
       """
       require "./spec_helper"
       require "set"
 
-      shared_examples "a collection with items" do |options|
-        request_examples options
-
+      requestable_examples "a collection with items" do |options|
         let(:collection) { described_class.new([7, 2, 4]) }
         
         requestable_example "is not empty" do
           collection.should_not be_empty
         end
 
-        requestable_example "has more than 0 items" do
+        requestable_it "has more than 0 items" do
           collection.should_not be_empty
         end
-
-        verify_requested_examples!
       end
 
       describe Array do
@@ -66,9 +62,7 @@ Feature: shared examples
       require "./spec_helper"
       require "set"
 
-      shared_examples "a collection with items" do |options|
-        request_examples options
-
+      requestable_examples "a collection with items" do |options|
         let(:collection) { described_class.new([7, 2, 4]) }
         
         requestable_example "is not empty", :as => "not empty" do
@@ -78,8 +72,6 @@ Feature: shared examples
         requestable_example "has more than 0 items", :as => "contains at least 1 or more items" do
           collection.should_not be_empty
         end
-
-        verify_requested_examples!
       end
 
       describe Array do
@@ -113,9 +105,7 @@ Feature: shared examples
       require "./spec_helper"
       require "set"
 
-      shared_examples "a collection with items" do |options|
-        request_examples options
-
+      requestable_examples "a collection with items" do |options|
         let(:collection) { described_class.new([7, 2, 4]) }
         
         requestable_<type> "collection rules" do
@@ -123,8 +113,6 @@ Feature: shared examples
             collection.should_not be_empty
           end
         end
-
-        verify_requested_examples!
       end
 
       describe Array do
@@ -165,9 +153,7 @@ Feature: shared examples
       require "./spec_helper"
       require "set"
 
-      shared_examples "a collection with items" do |options|
-        request_examples options
-
+      requestable_examples "a collection with items" do |options|
         let(:collection) { described_class.new([7, 2, 4]) }
         
         requestable_<type> "collection rules", :as => "aliased collection rules" do
@@ -175,8 +161,6 @@ Feature: shared examples
             collection.should_not be_empty
           end
         end
-        
-        verify_requested_examples!
       end
 
       describe Array do
@@ -217,9 +201,7 @@ Feature: shared examples
       require "./spec_helper"
       require "set"
 
-      shared_examples "a collection with items" do |options|
-        request_examples options
-        verify_requested_examples!
+      requestable_examples "a collection with items" do |options|
       end
 
       describe Array do
