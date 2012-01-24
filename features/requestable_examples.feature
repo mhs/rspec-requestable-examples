@@ -1,8 +1,46 @@
-Feature: shared examples
+Feature: Requestable examples
 
-  Requestable shared examples let you describe behavior as a collection of examples that
-  you can pick and choose from to run. This is similar to shared examples groups except
-  it allows for requesting specific examples or contexts to run.
+  Requestable examples are RSpec's shared examples with the addition that you can 
+  define examples which you can explicitly request later when you include the 
+  requestable example group. Because of this they are a super-set of shared examples.
+  
+  A requestable example group can be defined using the following mechanism:
+      
+      requestable_examples "description goes here" do
+        # ...
+      end
+      
+  Using this mechanism you have four new methods available to you when writing examples:
+    
+      # These are equivalent to writing 'it' except they are made requestable
+      requestable_it "name"
+      requestable_example "name"
+  
+      # These are equivalent to writing 'it' except they are made requestable
+      requestable_describe "name"
+      requestable_context  "name"
+      
+  You can mix it/describe/context with the above mechanisms, but when you use the 
+  traditional mechanisms those examples will ALWAYS be included. Now, onto using 
+  requestable example groups.
+  
+  A requestable example group can be included in another group using the same mechanisms
+  that you use when using shared example groups, e.g.:
+  
+      include_examples "name"      # include the examples in the current context
+      it_behaves_like "name"       # include the examples in a nested context
+      it_should_behave_like "name" # include the examples in a nested context
+
+  If you do not pass in any additional options (see below) then all examples are 
+  run. However, if you pass the :examples option with the names of the examples to
+  run then the requested examples will only run ones that you've specified!
+  
+      include_examples "name", :examples => ["example #1"]
+      it_behaves_like "name", :examples => ["example #1"]       # include the examples in a nested context
+      it_should_behave_like "name", :examples => ["example #1"]
+  
+  For more information on how to use these see the corresponding scenarios.
+
 
   Background:
     Given a file named "spec_helper.rb" with:
