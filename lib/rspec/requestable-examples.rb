@@ -5,10 +5,12 @@ module RSpec
     class RequestedExamples < Array
       def initialize(options)
         options ||= {}
+        @do_not_run_any_examples = true if options[:examples] == []
         replace options[:examples] || []
       end
   
       def run?(example)
+        return false if @do_not_run_any_examples
         return true if empty? || include?(example)
         false
       end
@@ -18,7 +20,7 @@ module RSpec
       if [String, Symbol, Module].any? {|cls| cls === args.first }
         object = args.shift
         ensure_shared_example_group_name_not_taken(object)
-        RSpec.world.shared_example_groups[object] = lambda do |options|
+        RSpec.world.shared_example_groups[object] = lambda do |options={}|
           request_examples options
           instance_eval(&block)
           verify_requested_examples!
@@ -34,7 +36,6 @@ module RSpec
       end
     end
 
-    
     def examples_that_can_be_requested
       @examples_that_can_be_requested ||= []
     end
